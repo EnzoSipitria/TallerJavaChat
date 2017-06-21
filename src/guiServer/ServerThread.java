@@ -59,6 +59,12 @@ public class ServerThread extends Thread {
 					server.sendUsersConected(name, emisor);
 				}break;
 
+				case "exitChannel": {
+					name = decoded[2];
+					emisor = decoded[1];
+					server.deleteUserOnChannel(emisor, name);
+					
+				}break;
 				case "joinChannel":{
 
 					name = decoded[1];
@@ -100,7 +106,8 @@ public class ServerThread extends Thread {
 				e.printStackTrace();
 				break;
 			}
-			
+			server.enviarMensajes("availableUsers"+server.SEPARATOR+server.availableUsers());
+			server.enviarMensajes("availableChannels"+server.SEPARATOR+server.availableChannels());
 		}
 		
 		/**

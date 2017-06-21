@@ -185,6 +185,9 @@ public class Client {
 		}
 	}
 	
+	
+	
+	
 	public void channelsAvailable(){
 		
 		
@@ -262,6 +265,37 @@ public class Client {
 		usuarios.clear();
 		usuarios.addAll(users);
 		GuiClient.interfazUsuarios();
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	public void deleteChannel(String channelName, String emisor) {
+		// TODO Auto-generated method stub
+		System.out.println("eliminando tab chat en clase cliente"+this.getName());
+//		if ( emisor.equals(this.getName()) ){
+//			System.out.println("estoy en el if si el emisor debe eliminar el tab");
+			GuiClient.deleteChannelTab(channelName);
+//			
+//			}
+//		else 
+//			this.actualizarVista(emisor+" no quiere hablar mas con ustedes ;)", "serverAdmin",name);
+	}
+
+
+
+	public void leaveChat(String channelName) {
+		System.out.println(channelName+" a eliminar ");
+		try {
+			dataOut = new DataOutputStream(socketConnection.getOutputStream());
+			dataOut.writeUTF("exitChannel"+GuiClient.SEPARATOR+this.getName()+GuiClient.SEPARATOR+channelName);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 		// TODO Auto-generated method stub
 		
 	}

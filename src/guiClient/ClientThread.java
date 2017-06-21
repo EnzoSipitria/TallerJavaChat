@@ -65,12 +65,24 @@ public class ClientThread extends Thread {
 			case "createdPrivateChannel":{
 				emisor = decoded[1];
 				name = decoded[2];
+				cliente.updateChannels(name);
 				if ( emisor.equals(cliente.getName()) ) {
 					cliente.createChatTab(name);
 				}
 				
 			}break; 
-			
+			case "userDesconected" :{
+				name = decoded[2];
+				emisor=decoded[1];
+				System.out.println("emisor: "+emisor);
+				System.out.println(cliente.getName()+" canal nombre: "+ name);
+				if ( emisor.equals(cliente.getName()) ){
+					System.out.println("estoy en el if si el emisor debe eliminar el tab");
+					cliente.deleteChannel(name,emisor);
+					}
+				else cliente.actualizarVista(emisor+" no quiere hablar mas con ustedes ;)", "serverAdmin",name);
+				
+			}break;
 			case "availableChannels":{
 				ArrayList<String> channels= new ArrayList<>();
 				for (int i = 1; i < decoded.length; i++) {

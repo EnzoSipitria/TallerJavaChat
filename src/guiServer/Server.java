@@ -7,6 +7,9 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.TimerTask;
+
+import org.omg.CORBA.PUBLIC_MEMBER;
 
 import conections.Channel;
 import guiClient.Client;
@@ -127,7 +130,32 @@ public class Server implements Runnable{
 		
 	}
 	
+	private void deleteEmptyChannels(){
+		for (int i = 0; i < canales.size(); i++) {
+			if ( canales.get(i).isEmpty() )
+				canales.remove(i);
+			
+		}
+		enviarMensajes("availableChannels"+SEPARATOR+availableChannels());
+
+	}
 	
+	public void deleteUserOnChannel(String emisor, String channelName){
+//		int i = 0;
+		for (Channel channel : canales) {
+				if ( channel.getNombre().equals(channelName) ){
+					channel.deleteUser(emisor);
+					System.out.println(emisor+" eliminado del canal "+channelName);
+				}
+//				if ( channel.isEmpty() ){
+//					canales.remove(i);
+//				}
+//				i++;
+		}
+//		enviarMensajes(mensaje);
+		enviarMensajes("userDesconected"+SEPARATOR+emisor+SEPARATOR+channelName, emisor, channelName);
+		deleteEmptyChannels();
+	}
 	
 	public void sendUsersConected(String channelName, String emisor){
 		String usersList = "";
@@ -181,6 +209,7 @@ public class Server implements Runnable{
 	}
 	
 	
+
 	//crea un canal con los dos usuarios recibidos como parametro
 	
 	public void privateChat(String emisor,String receptor){
