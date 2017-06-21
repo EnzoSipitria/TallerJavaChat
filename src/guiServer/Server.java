@@ -235,7 +235,7 @@ public class Server implements Runnable{
 	
 	
 	public static void main(String[] args) {
-		Server server=new Server(6545);
+		Server server=new Server(2317);
 		server.run();
 				
 	}
